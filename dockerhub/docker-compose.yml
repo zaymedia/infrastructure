@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+
+    dockerhub:
+        container_name: dockerhub
+        image: registry:2
+        restart: always
+        environment:
+            REGISTRY_AUTH: htpasswd
+            REGISTRY_AUTH_HTPASSWD_REALM: Realm
+            REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+            REGISTRY_STORAGE_DELETE_ENABLED: true
+        volumes:
+            - dockerhub:/var/lib/registry
+            - ./htpasswd:/auth/htpasswd
+            - ./docker/garbage.yml:/dockerhub/garbage.yml
+        labels:
+            - traefik.enable=true
+            - traefik.docker.network=traefik-public
+            - traefik.http.routers.dockerhub.rule=Host(`dockerhub.zay.media`)
+            - traefik.http.routers.dockerhub.entryPoints=https
+            - traefik.http.routers.dockerhub.middlewares=secure-headers
+            - traefik.http.routers.dockerhub.tls=true
+            - traefik.http.routers.dockerhub.tls.certResolver=letsEncrypt
+        networks:
+            - traefik-public
+
+    cache-dockerhub:
+        container_name: cache-dockerhub
+        image: registry:2
+        restart: always
+        environment:
+            REGISTRY_PROXY_REMOTEURL: https://registry-1.docker.io
+            REGISTRY_STORAGE_DELETE_ENABLED: 1
+        volumes:
+            - cache-dockerhub:/var/lib/registry
+        networks:
+            - traefik-public
+
+volumes:
+    dockerhub:
+    cache-dockerhub:
+
+networks:
+    traefik-public:
+        external: true

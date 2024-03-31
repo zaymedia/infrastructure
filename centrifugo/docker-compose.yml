@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+
+    centrifugo:
+        container_name: centrifugo
+        image: centrifugo/centrifugo:latest
+        restart: always
+        volumes:
+            - ./docker/config.json:/centrifugo/config.json
+        command: centrifugo -c config.json
+        ulimits:
+            nofile:
+                soft: 65535
+                hard: 65535
+        labels:
+            - traefik.enable=true
+            - traefik.docker.network=traefik-public
+            - traefik.http.routers.centrifugo.rule=Host(`realtime.zay.media`)
+            - traefik.http.routers.centrifugo.entryPoints=https
+            - traefik.http.routers.centrifugo.middlewares=secure-headers
+            - traefik.http.routers.centrifugo.tls=true
+            - traefik.http.routers.centrifugo.tls.certResolver=letsEncrypt
+            - traefik.http.services.centrifugo.loadBalancer.server.port=8000
+        networks:
+            - traefik-public
+
+networks:
+    traefik-public:
+        external: true

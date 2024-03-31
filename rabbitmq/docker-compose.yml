@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+
+    rabbitmq:
+        container_name: rabbitmq
+        image: rabbitmq:3-management
+        restart: always
+        ports:
+            - "5672:5672"
+        environment:
+            RABBITMQ_DEFAULT_USER: "guest"
+            RABBITMQ_DEFAULT_PASS: "guest"
+        volumes:
+            - rabbitmq-data:/var/lib/rabbitmq
+        labels:
+            - traefik.enable=true
+            - traefik.docker.network=traefik-public
+            - traefik.http.routers.rabbitmq.rule=Host(`rabbit.zay.media`)
+            - traefik.http.routers.rabbitmq.entryPoints=https
+            - traefik.http.routers.rabbitmq.middlewares=secure-headers
+            - traefik.http.routers.rabbitmq.tls=true
+            - traefik.http.routers.rabbitmq.tls.certResolver=letsEncrypt
+            - traefik.http.services.rabbitmq.loadBalancer.server.port=15672
+        networks:
+            - traefik-public
+
+volumes:
+    rabbitmq-data:
+
+networks:
+    traefik-public:
+        external: true
