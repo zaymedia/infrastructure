@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+
+  vpn:
+    container_name: vpn
+    image: hwdsl2/ipsec-vpn-server:latest
+    restart: always
+    privileged: true
+    ports:
+      - "500:500/udp"
+      - "4500:4500/udp"
+    environment:
+      VPN_IPSEC_PSK: "mysecretpassword"
+      VPN_USER: username
+      VPN_PASSWORD: password
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-public
+      - traefik.http.routers.vpn.rule=Host(`vpn.zay.media`)
+      - traefik.http.routers.vpn.entryPoints=https
+      - traefik.http.routers.vpn.middlewares=secure-headers
+      - traefik.http.routers.vpn.tls=true
+      - traefik.http.routers.vpn.tls.certResolver=letsEncrypt
+      - traefik.http.services.vpn.loadBalancer.server.port=4500
+    networks:
+      - traefik-public
+    volumes:
+      - ikev2-vpn-data:/etc/ipsec.d
+      - /lib/modules:/lib/modules:ro
+
+volumes:
+  ikev2-vpn-data:
+
+networks:
+  traefik-public:
+    external: true
+
