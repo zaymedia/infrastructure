@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
 
     dockerhub:
@@ -15,6 +13,8 @@ services:
             - dockerhub:/var/lib/registry
             - ./htpasswd:/auth/htpasswd
             - ./docker/garbage.yml:/dockerhub/garbage.yml
+        networks:
+            - traefik-public
         labels:
             - traefik.enable=true
             - traefik.docker.network=traefik-public
@@ -23,8 +23,6 @@ services:
             - traefik.http.routers.dockerhub.middlewares=secure-headers
             - traefik.http.routers.dockerhub.tls=true
             - traefik.http.routers.dockerhub.tls.certResolver=letsEncrypt
-        networks:
-            - traefik-public
 
     cache-dockerhub:
         container_name: cache-dockerhub

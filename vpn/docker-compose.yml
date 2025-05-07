@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
 
   vpn:
@@ -14,6 +12,11 @@ services:
       VPN_IPSEC_PSK: "mysecretpassword"
       VPN_USER: username
       VPN_PASSWORD: password
+    volumes:
+      - ikev2-vpn-data:/etc/ipsec.d
+      - /lib/modules:/lib/modules:ro
+    networks:
+      - traefik-public
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-public
@@ -23,11 +26,6 @@ services:
       - traefik.http.routers.vpn.tls=true
       - traefik.http.routers.vpn.tls.certResolver=letsEncrypt
       - traefik.http.services.vpn.loadBalancer.server.port=4500
-    networks:
-      - traefik-public
-    volumes:
-      - ikev2-vpn-data:/etc/ipsec.d
-      - /lib/modules:/lib/modules:ro
 
 volumes:
   ikev2-vpn-data:

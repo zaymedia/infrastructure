@@ -1,16 +1,32 @@
 {
-    "token_hmac_secret_key": "test-157-a253-4094-9759-06a8236543fs",
-    "api_key": "test-bb6-2292-4911-82e1-615c0ed3eebs",
-    "admin": true,
-    "admin_password": "test-813-0916-4c49-979f-0e08a686b727",
-    "admin_secret": "test-157-a253-4094-9759-06a8236543fs",
-    "allowed_origins": ["http://localhost:3000", "http://sab.localhost", "https://zay.media"],
-    "allow_subscribe_for_client": false,
-    "namespaces": [{
-        "name": "public",
-        "presence": true,
-        "join_leave": true,
-        "force_push_join_leave": true,
-        "allow_presence_for_subscriber": true
-    }]
+    "client": {
+        "token": {
+            "hmac_secret_key": "test-157-a253-4094-9759-06a8236543fs"
+        },
+        "allowed_origins": [
+            "http://localhost:3000"
+        ]
+    },
+    "channel": {
+        "without_namespace": {
+            "allow_subscribe_for_client": false
+        },
+        "namespaces": [
+            {
+                "name": "public",
+                "presence": true,
+                "join_leave": true,
+                "force_push_join_leave": true,
+                "allow_presence_for_subscriber": true
+            }
+        ]
+    },
+    "admin": {
+        "enabled": true,
+        "password": "test-813-0916-4c49-979f-0e08a686b727",
+        "secret": "test-157-a253-4094-9759-06a8236543fs"
+    },
+    "http_api": {
+        "key": "test-bb6-2292-4911-82e1-615c0ed3eebs"
+    }
 }

@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
 
     rabbitmq:
@@ -13,6 +11,8 @@ services:
             RABBITMQ_DEFAULT_PASS: "guest"
         volumes:
             - rabbitmq-data:/var/lib/rabbitmq
+        networks:
+            - traefik-public
         labels:
             - traefik.enable=true
             - traefik.docker.network=traefik-public
@@ -22,8 +22,6 @@ services:
             - traefik.http.routers.rabbitmq.tls=true
             - traefik.http.routers.rabbitmq.tls.certResolver=letsEncrypt
             - traefik.http.services.rabbitmq.loadBalancer.server.port=15672
-        networks:
-            - traefik-public
 
 volumes:
     rabbitmq-data:

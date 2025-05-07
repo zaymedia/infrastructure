@@ -1,4 +1,4 @@
-init: docker-down docker-pull docker-network docker-build docker-up
+init: docker-down docker-pull docker-build docker-up
 
 up: docker-up
 down: docker-down
@@ -17,9 +17,6 @@ docker-pull:
 
 docker-build:
 	docker compose build --pull
-
-docker-network:
-	docker network create traefik-public || true
 
 show-jenkins-password:
 	docker compose exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword

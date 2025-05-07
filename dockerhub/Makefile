@@ -1,4 +1,4 @@
-init: docker-down docker-pull docker-network docker-build docker-up
+init: docker-down docker-pull docker-build docker-up
 
 up: docker-up
 down: docker-down
@@ -18,9 +18,6 @@ docker-pull:
 
 docker-build:
 	docker compose build --pull
-
-docker-network:
-	docker network create traefik-public || true
 
 docker-clear:
 	docker compose exec dockerhub bin/registry garbage-collect /dockerhub/garbage.yml [--delete-untagged] \

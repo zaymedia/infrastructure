@@ -1,0 +1,23 @@
+services:
+
+  instagram-rest-api:
+    container_name: instagram-rest-api
+    image: grabsu/instagram-rest-api:1.0.0
+    restart: always
+    volumes:
+      - ./db.json:/app/db.json
+    networks:
+      - traefik-public
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-public
+      - traefik.http.routers.instagram.rule=Host(`ig.zay.media`)
+      - traefik.http.routers.instagram.entryPoints=https
+      - traefik.http.routers.instagram.middlewares=secure-headers
+      - traefik.http.routers.instagram.tls=true
+      - traefik.http.routers.instagram.tls.certResolver=letsEncrypt
+      - traefik.http.services.instagram.loadBalancer.server.port=8000
+
+networks:
+  traefik-public:
+    external: true

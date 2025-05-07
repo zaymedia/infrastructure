@@ -30,6 +30,7 @@ sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 ### Базовые сервисы
 
 - [Traefik](./traefik/README.md)
+- [Portainer](./portainer/README.md)
 - [RabbitMQ](./rabbitmq/README.md)
 - [Centrifugo](./centrifugo/README.md)
 

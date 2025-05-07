@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
 
     centrifugo:
@@ -13,6 +11,8 @@ services:
             nofile:
                 soft: 65535
                 hard: 65535
+        networks:
+            - traefik-public
         labels:
             - traefik.enable=true
             - traefik.docker.network=traefik-public
@@ -22,8 +22,6 @@ services:
             - traefik.http.routers.centrifugo.tls=true
             - traefik.http.routers.centrifugo.tls.certResolver=letsEncrypt
             - traefik.http.services.centrifugo.loadBalancer.server.port=8000
-        networks:
-            - traefik-public
 
 networks:
     traefik-public:
