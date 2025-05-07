@@ -1,9 +1,9 @@
 services:
 
     traefik:
-        image: traefik:3.3
         container_name: traefik
         restart: always
+        image: traefik:3.3
         command:
             - --providers.docker=true
             - --providers.docker.exposedByDefault=false

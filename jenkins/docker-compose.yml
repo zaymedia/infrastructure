@@ -2,9 +2,9 @@ services:
 
   jenkins:
     container_name: jenkins
+    restart: always
     build:
       context: ./docker
-    restart: always
     environment:
       DOCKER_HOST: tcp://docker:2376
       DOCKER_CERT_PATH: /certs/client

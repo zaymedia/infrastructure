@@ -1,0 +1,6 @@
+.vscode
+.idea
+nbproject
+Thumbs.db
+.DS_Store
+/htpasswd

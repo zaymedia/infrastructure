@@ -32,6 +32,7 @@ sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 - [Traefik](./traefik/README.md)
 - [Portainer](./portainer/README.md)
 - [RabbitMQ](./rabbitmq/README.md)
+- [Postgres](./postgres/README.md)
 - [Centrifugo](./centrifugo/README.md)
 
 ---

@@ -2,8 +2,8 @@ services:
 
     dockerhub:
         container_name: dockerhub
-        image: registry:2
         restart: always
+        image: registry:2
         environment:
             REGISTRY_AUTH: htpasswd
             REGISTRY_AUTH_HTPASSWD_REALM: Realm

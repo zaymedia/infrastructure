@@ -2,8 +2,8 @@ services:
 
   vpn:
     container_name: vpn
-    image: hwdsl2/ipsec-vpn-server:latest
     restart: always
+    image: hwdsl2/ipsec-vpn-server:latest
     privileged: true
     ports:
       - "500:500/udp"
