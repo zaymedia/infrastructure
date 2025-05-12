@@ -25,6 +25,8 @@ sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
 5. Создание пользователя для деплоя согласно [инструкции](./wiki/deploy.md)
 
+6. Очистка неиспользуемых ресурсов Docker согласно [инструкции](./wiki/prune.md)
+
 ---
 
 ### Базовые сервисы
