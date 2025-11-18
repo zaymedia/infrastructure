@@ -32,3 +32,21 @@ make init
 ```
 make down
 ```
+
+---
+
+Конфигурация клиента доступна внутри Docker-контейнера:
+- /etc/ipsec.d/vpnclient.p12 (for Windows & Linux)
+- /etc/ipsec.d/vpnclient.sswan (for Android)
+- /etc/ipsec.d/vpnclient.mobileconfig (for iOS & macOS)
+
+Скопировать нужную конфигурацию из Docker-контейнера на хост-машину:
+```
+docker cp vpn:/etc/ipsec.d/vpnclient.mobileconfig ./
+```
+
+1. Скачать нужную конфигурацию на устройство и открыть.
+2. В macOS или iOS появится предупреждение: перейдите в Settings → Profiles (Профили), нажмите Install (Установить).
+3. Подтвердите установку, следуя инструкциям.
+4. После установки профиль появится в разделе Settings → VPN.
+5. Выберите профиль и нажмите Connect
