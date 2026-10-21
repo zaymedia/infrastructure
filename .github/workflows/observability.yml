@@ -1,0 +1,24 @@
+name: ZAY observability
+on:
+  push:
+    branches: [main]
+    paths: ['observability/**', '.github/workflows/observability.yml']
+  pull_request:
+    paths: ['observability/**', '.github/workflows/observability.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate installer shell
+        run: |
+          sh -n observability/install-vector-package.sh
+          sh -n observability/install-config.sh
+      - name: Check routing, privacy and full Vector configuration
+        run: python3 observability/test_pipeline.py
+      - name: Verify real Docker discovery, retry, bounded memory and graceful drain
+        run: python3 observability/test_docker_delivery.py

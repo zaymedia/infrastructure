@@ -1,0 +1,202 @@
+{
+  "server": {
+    "name": "ZAY",
+    "address": "37.143.8.251",
+    "environment": "production",
+    "externalKey": "zay:production:server:37.143.8.251"
+  },
+  "projects": [
+    {
+      "key": "bugrain",
+      "name": "DuckBug: Багопад",
+      "technologyId": 1,
+      "composeProjects": [
+        "bugrain"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaytcevcom/bugrain",
+      "duckbugProjectId": "10c4e51e-c156-438d-9601-4aed05d2c250",
+      "group": "Мини-приложения"
+    },
+    {
+      "key": "cactusmania",
+      "name": "Кактусомания",
+      "technologyId": 11,
+      "composeProjects": [
+        "cactusmania"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaytcevcom/cactusmania-miniapp",
+      "duckbugProjectId": "dc13371d-8a61-480b-8086-06ccd651e381",
+      "group": "Мини-приложения"
+    },
+    {
+      "key": "wishlist",
+      "name": "Wishlist",
+      "technologyId": 11,
+      "composeProjects": [
+        "wishlist"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaytcevcom/wishlist-miniapp",
+      "duckbugProjectId": "93de010c-2baa-4402-802f-623cd71f1478",
+      "group": "Мини-приложения"
+    },
+    {
+      "key": "lo-sdk-test",
+      "name": "LO SDK Test",
+      "technologyId": 1,
+      "composeProjects": [
+        "lo-sdk-test"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/LO-ink/lo-sdk-test",
+      "duckbugProjectId": "ef962e26-2b08-400a-80b3-0dbd1275a2a6",
+      "group": "Мини-приложения"
+    },
+    {
+      "key": "socmoder",
+      "name": "SOCMODER",
+      "technologyId": 2,
+      "composeProjects": [
+        "socmoder",
+        "socmoder-db"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaytcevcom/socmoder",
+      "duckbugProjectId": "3c6d1b64-4f9f-4ad9-888a-96a0752f9c99",
+      "group": "Сервисы"
+    },
+    {
+      "key": "trade-bots",
+      "name": "Trade Bots",
+      "technologyId": 10,
+      "composeProjects": [
+        "003",
+        "004"
+      ],
+      "containerNames": [],
+      "duckbugProjectId": "84f49792-0b2e-431a-8a70-c0c76a0d857f",
+      "group": "Трейдинг"
+    },
+    {
+      "key": "ozon",
+      "name": "Ozon",
+      "technologyId": 11,
+      "composeProjects": [
+        "ozon"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaytcevcom/ozon",
+      "duckbugProjectId": "f370765a-750c-4f08-8cff-e3c7505ebe2c",
+      "group": "Сервисы"
+    },
+    {
+      "key": "pokerbot",
+      "name": "PokerBot",
+      "technologyId": 10,
+      "composeProjects": [
+        "pokerbot"
+      ],
+      "containerNames": [],
+      "duckbugProjectId": "ff68d1b2-9a36-4926-a135-256ba24a399f",
+      "group": "Сервисы"
+    },
+    {
+      "key": "kutt",
+      "name": "Kutt",
+      "technologyId": 1,
+      "composeProjects": [
+        "kutt"
+      ],
+      "containerNames": [],
+      "duckbugProjectId": "4420c6fd-40f2-481c-86bb-0c75875d939c",
+      "group": "Сервисы"
+    },
+    {
+      "key": "exfeel-api",
+      "name": "Exfeel API",
+      "technologyId": 2,
+      "composeProjects": [
+        "exfeel"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaymedia/exfeel-api",
+      "duckbugProjectId": "9b90c128-6c5a-49b9-8b85-837a74d7451e",
+      "group": "Exfeel"
+    },
+    {
+      "key": "exfeel-web",
+      "name": "Exfeel Web",
+      "technologyId": 3,
+      "composeProjects": [
+        "exfeel-web"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaymedia/exfeel",
+      "duckbugProjectId": "2c50c54f-92ae-466d-ad4b-97c9ec0a3da6",
+      "group": "Exfeel"
+    },
+    {
+      "key": "trade-hedge",
+      "name": "Trade Hedge",
+      "technologyId": 11,
+      "composeProjects": [
+        "hedge"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaytcevcom/trade-hedge",
+      "duckbugProjectId": "1508498c-d883-4ff9-8cbc-3345d5c6f661",
+      "group": "Трейдинг"
+    },
+    {
+      "key": "zaytcev",
+      "name": "Zaytcev.com",
+      "technologyId": 1,
+      "composeProjects": [],
+      "containerNames": [
+        "zaytcevcom"
+      ],
+      "repository": "https://github.com/zaytcevcom/zaytcev",
+      "duckbugProjectId": "029dac64-f7c8-4338-89b6-6a2af35cc22e",
+      "group": "Сайты"
+    },
+    {
+      "key": "zaymedia",
+      "name": "ZAY.MEDIA",
+      "technologyId": 1,
+      "composeProjects": [
+        "zaymedia"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaymedia/zaymedia",
+      "duckbugProjectId": "ec3169f2-b41b-4634-b674-2a796dddc797",
+      "group": "Сайты"
+    },
+    {
+      "key": "zay-infrastructure",
+      "name": "ZAY Infrastructure",
+      "technologyId": 11,
+      "composeProjects": [
+        "traefik",
+        "postgres",
+        "mysql"
+      ],
+      "containerNames": [],
+      "repository": "https://github.com/zaymedia/infrastructure",
+      "duckbugProjectId": "dfd9c548-3755-4f12-88b9-b31c5437c0f0",
+      "group": "Инфраструктура"
+    }
+  ],
+  "fallbackProject": "zay-infrastructure",
+  "organizationId": "a5f74955-518a-4b6c-9b63-eff1087741cc",
+  "organizationName": "ZAY.MEDIA",
+  "projectGroups": {
+    "Мини-приложения": "07a25ddd-1d4b-4efd-8519-f3f6936fcd4b",
+    "Сервисы": "ae1d0a53-cc29-442f-a19e-22341fdab04b",
+    "Сайты": "c4a086a3-d64b-48d8-97f5-be135b5d6c8c",
+    "Exfeel": "5adbf335-e7fa-4c72-b2de-484d967b50b7",
+    "Трейдинг": "ee123c65-e231-4c7a-8910-a8739e27ddb2",
+    "Инфраструктура": "2fd9f647-ec17-4265-9240-bedefb6355b8"
+  }
+}
