@@ -129,7 +129,8 @@ s.writeHead(status,{'Content-Type':'application/json'}).end(JSON.stringify({crea
             while True:
                 metrics = [json.loads(line) for line in (shared/'metrics.jsonl').read_text().splitlines()]
                 sizes = [m.get('gauge',{}).get('value',0) for m in metrics if m.get('name')=='buffer_size_events' and m.get('tags',{}).get('component_id')=='bugrain_http']
-                if sizes and sizes[-1] >= 256: break
+                # The channel's consumer can reserve one slot while its request retries.
+                if sizes and sizes[-1] >= 255: break
                 if time.monotonic() >= deadline: raise AssertionError('Memory queue did not fill under backpressure')
                 time.sleep(0.2)
             rss_kib = int(docker('exec', collector, 'sh', '-c', "awk '/VmRSS:/ {print $2}' /proc/1/status"))
