@@ -17,6 +17,12 @@ def docker(*args):
     return subprocess.check_output(['docker', *args], text=True, stderr=subprocess.STDOUT, timeout=90).strip()
 
 
+def completed_rows(path):
+    # The file sink can still be appending its final JSON frame when polled.
+    if not path.exists(): return []
+    return [json.loads(line) for line in path.read_text().rpartition('\n')[0].splitlines()]
+
+
 def main():
     prefix = 'zay-observability-fixture-' + uuid.uuid4().hex[:10]
     network = prefix
@@ -56,7 +62,7 @@ s.writeHead(status,{'Content-Type':'application/json'}).end(JSON.stringify({crea
 
         def requests():
             path = shared / 'requests.jsonl'
-            return [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
+            return completed_rows(path)
 
         def await_event(marker, status):
             deadline = time.monotonic() + 60
@@ -127,12 +133,24 @@ s.writeHead(status,{'Content-Type':'application/json'}).end(JSON.stringify({crea
             docker('exec', application, 'node', '-e', program)
             deadline = time.monotonic() + 30
             while True:
-                metrics = [json.loads(line) for line in (shared/'metrics.jsonl').read_text().splitlines()]
+                metrics = completed_rows(shared/'metrics.jsonl')
                 sizes = [m.get('gauge',{}).get('value',0) for m in metrics if m.get('name')=='buffer_size_events' and m.get('tags',{}).get('component_id')=='bugrain_http']
-                # The channel's consumer can reserve one slot while its request retries.
-                if sizes and sizes[-1] >= 255: break
+                # Batched producers may block before the approximate gauge reaches its limit.
+                if sizes and 0 < sizes[-1] <= 256: break
                 if time.monotonic() >= deadline: raise AssertionError('Memory queue did not fill under backpressure')
                 time.sleep(0.2)
+            # Wait past two buffer-metric reporting intervals to prove backpressure.
+            plateau = {}
+            for observation in range(2):
+                time.sleep(5)
+                for metric in completed_rows(shared/'metrics.jsonl'):
+                    if metric.get('tags',{}).get('component_id')=='bugrain_http' and metric.get('name') in ['buffer_received_events_total', 'buffer_sent_events_total']:
+                        plateau[metric['name']] = metric['counter']['value']
+                if observation == 0: previous = plateau.copy()
+                else: assert plateau == previous, 'Queue did not apply stable backpressure'
+            occupancy = plateau['buffer_received_events_total'] - plateau['buffer_sent_events_total']
+            assert 0 < occupancy <= 256
+            assert plateau['buffer_received_events_total'] < 500, 'No upstream backlog remained blocked'
             rss_kib = int(docker('exec', collector, 'sh', '-c', "awk '/VmRSS:/ {print $2}' /proc/1/status"))
             assert rss_kib < 512 * 1024, 'Fixture RSS exceeded service memory budget'
             print('FULL_QUEUE_RSS_KIB', rss_kib, flush=True)
@@ -172,8 +190,7 @@ s.writeHead(status,{'Content-Type':'application/json'}).end(JSON.stringify({crea
             metrics = shared / 'metrics.jsonl'
             if metrics.exists():
                 latest = {}
-                for line in metrics.read_text().splitlines():
-                    metric = json.loads(line)
+                for metric in completed_rows(metrics):
                     name = metric.get('name', '')
                     if name.startswith(('buffer_', 'component_', 'http_client_')):
                         latest[(name, json.dumps(metric.get('tags', {}), sort_keys=True))] = metric
